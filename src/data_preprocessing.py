@@ -1,4 +1,3 @@
-"""Loading, cleaning, and feature engineering for IBM Telco Churn data."""
 import pandas as pd
 from src.utils import DATA_PATH
 

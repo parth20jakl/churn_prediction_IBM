@@ -1,4 +1,3 @@
-"""EDA figures and reproducible churn-rate summaries."""
 import matplotlib.pyplot as plt
 import seaborn as sns
 from src.utils import FIGURE_DIR, ensure_output_dirs
