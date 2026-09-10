@@ -21,9 +21,11 @@ def clean_data(df):
 def engineer_features(df):
     data = df.copy()
     data["TenureGroup"] = pd.cut(data["tenure"], [-1, 12, 24, 48, 72], labels=["0-12", "13-24", "25-48", "49-72"])
-    data["MonthlyChargeBand"] = pd.qcut(data["MonthlyCharges"], 3, labels=["Low", "Medium", "High"], duplicates="drop")
+    data["MonthlyChargeBand"] = pd.cut(data["MonthlyCharges"], [-1, 35, 70, float("inf")], labels=["Low", "Medium", "High"])
     service_columns = ["PhoneService", "MultipleLines", "OnlineSecurity", "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV", "StreamingMovies"]
     data["ServiceCount"] = data[service_columns].eq("Yes").sum(axis=1)
+    data["AverageChargeToDate"] = data["TotalCharges"] / (data["tenure"] + 1)
+    data["IsMonthToMonthFiber"] = ((data["Contract"] == "Month-to-month") & (data["InternetService"] == "Fiber optic")).astype(int)
     return data
 
 def get_model_data(df):
